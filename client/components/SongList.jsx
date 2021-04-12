@@ -4,19 +4,19 @@ import gql from 'graphql-tag'; // imported by apollo-client
 
 const SongList = ({ data }) => {
   const renderSongs = () => {
-    if (!data || !data.songs) {
+    if (!data || data.loading || !data.songs) {
       return [];
     }
 
     return data.songs.map((song) => {
-      return <li>{song.title}</li>
+      return <li key={song.id} className="collection-item">{song.title}</li>
     });
   };
 
   return (
     <div>
       <h1>Song List</h1>
-      <ul>{renderSongs()}</ul>
+      <ul className="collection">{renderSongs()}</ul>
     </div>
   )
 };
@@ -24,6 +24,7 @@ const SongList = ({ data }) => {
 const songsQuery = gql`
   query {
     songs {
+      id
       title
     }
   }
