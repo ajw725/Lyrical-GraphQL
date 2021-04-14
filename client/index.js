@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import ApolloClient from 'apollo-client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from 'react-apollo';
 import App from './components/App';
 import SongList from './components/SongList';
+import SongCreate from './components/SongCreate';
 
-const client = new ApolloClient({});
+const client = new ApolloClient({ cache: new InMemoryCache() });
 
 const Root = () => {
   return (
@@ -14,6 +15,7 @@ const Root = () => {
       <Router history={hashHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={SongList} />
+          <Route path="songs/new" component={SongCreate} />
         </Route>
       </Router>
     </ApolloProvider>
