@@ -1,10 +1,20 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag'; // imported by apollo-client
+import { gql, useQuery } from '@apollo/client';
 
-const SongList = ({ data }) => {
+const GET_SONGS = gql`
+  query {
+    songs {
+      id
+      title
+    }
+  }
+`;
+
+const SongList = () => {
+  const { loading, error, data } = useQuery(GET_SONGS);
+
   const renderSongs = () => {
-    if (!data || data.loading || !data.songs) {
+    if (loading || !data || !data.songs) {
       return [];
     }
 
@@ -21,13 +31,5 @@ const SongList = ({ data }) => {
   )
 };
 
-const songsQuery = gql`
-  query {
-    songs {
-      id
-      title
-    }
-  }
-`;
 
-export default graphql(songsQuery)(SongList);
+export default SongList;
