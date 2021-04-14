@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
 const SongCreate = () => {
-  const songData = useState({});
+  const [title, setTitle] = useState('');
 
   return (
     <div>
       <h1>Create Song</h1>
-      <form></form>
+      <form>
+        <label>Song Title:</label>
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+      </form>
     </div>
   )
 };
