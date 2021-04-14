@@ -1,15 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { gql, useQuery } from '@apollo/client';
-
-const GET_SONGS = gql`
-  query {
-    songs {
-      id
-      title
-    }
-  }
-`;
+import { useQuery } from '@apollo/client';
+import { GET_SONGS } from '../queries'
 
 const SongList = () => {
   const { loading, error, data } = useQuery(GET_SONGS);
