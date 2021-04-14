@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { gql, useQuery } from '@apollo/client';
 
 const GET_SONGS = gql`
@@ -27,6 +28,11 @@ const SongList = () => {
     <div>
       <h1>Song List</h1>
       <ul className="collection">{renderSongs()}</ul>
+      <div>
+        <Link to="/songs/new" className="btn-floating btn-large red right">
+          <i className="material-icons">add</i>
+        </Link>
+      </div>
     </div>
   )
 };

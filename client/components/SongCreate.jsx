@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, hashHistory } from 'react-router';
 import { gql, useMutation } from '@apollo/client';
 
 const ADD_SONG = gql`
@@ -18,12 +19,15 @@ const SongCreate = () => {
     e.preventDefault();
 
     const song = { title };
-    addSong({ variables: { title }})
-    setTitle('');
+    addSong({ variables: { title }}).then(() => {
+      setTitle('');
+      hashHistory.push('/');
+    });
   }
 
   return (
     <div>
+      <Link to="/">Back</Link>
       <h1>Create Song</h1>
       <form onSubmit={onSubmit}>
         <label>Song Title:</label>
