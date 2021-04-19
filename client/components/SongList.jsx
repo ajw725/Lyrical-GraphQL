@@ -1,18 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { useQuery } from '@apollo/client';
-import { GET_SONGS } from '../queries'
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_SONGS, DELETE_SONG } from '../queries'
 
 const SongList = () => {
   const { loading, error, data } = useQuery(GET_SONGS);
+  const [deleteSong] = useMutation(DELETE_SONG);
+
+  const handleDelete = (songId) => {
+    if (!confirm('Are you sure you want to delete this song?')) {
+      return;
+    }
+
+    deleteSong({
+      variables: { id: songId },
+      refetchQueries: [{ query: GET_SONGS }]
+    });
+  };
 
   const renderSongs = () => {
     if (loading || !data || !data.songs) {
       return [];
     }
 
-    return data.songs.map((song) => {
-      return <li key={song.id} className="collection-item">{song.title}</li>
+    return data.songs.map(({ id, title }) => {
+      return (
+        <li key={id} className="collection-item">
+          <span>{title}</span>
+          <i className="material-icons" onClick={() => handleDelete(id)}>delete</i>
+        </li>
+      );
     });
   };
 
